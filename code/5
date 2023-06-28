@@ -1,0 +1,11 @@
+void main() {
+	int a, b, c, x, x;
+	int a;
+    x= 4 ;
+    b= 2 ;
+	do {
+        x = x + 2 + 7 * 9;
+    }
+
+		while (a>b);
+ }

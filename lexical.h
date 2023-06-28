@@ -41,6 +41,7 @@ public:
      * @param code ´úÂë×Ö·û´®
      */
     void analyse(string &code);
+    bool lexicalFlag=true;
 };
 
 #endif

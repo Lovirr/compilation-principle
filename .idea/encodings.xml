@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/CMakeLists.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/code/keyword.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/combuilder.cpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/combuilder.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/compiler.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/compiler.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/conditional.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/conditional.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/experiment/3.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/grammar.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/grammar.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/lexical.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/lexical.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/my_structs.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/operation.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/operation.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parser.h" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

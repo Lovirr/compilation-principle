@@ -1,4 +1,11 @@
 #include "lexical.h"
+#include <Windows.h>
+
+void color1(WORD c);//控制输出字体属性(字体颜色)
+void color1(WORD c) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);//设置控制台输出字体颜色值为c的值
+}
+
 
 bool LexicalAnalysis::findcreate(string &p, bool type) {
     int i;
@@ -6,23 +13,40 @@ bool LexicalAnalysis::findcreate(string &p, bool type) {
         if (signTable[i].name == p) {
             symbolTable[symbolTableSize].sign = p;
             symbolTable[symbolTableSize++].code = 1;
-            return 0;
+            return false;
         }
     }
     //字符串常量表中没有单词p,就把p存储到字符串常量表和单词表中
+    //type=1,表示已经定义的标识符
     if (i == signTableSize && type) {
         symbolTable[symbolTableSize].sign = p;
         symbolTable[symbolTableSize++].code = 1;
         signTable[signTableSize++].name = p;
     }
+    //type=0,表示未定义的标识符
     if (!type) {
-        cout << p << "未定义!" << endl;
-        return false;
+        color1(0x0c);
+        cout << "ERROR:  The variable '" << p << "' was undefined!" << endl;
+        color1(0x07);
+        lexicalFlag = false;
+        exit(0);
     }
     return true;
 }
+
 void LexicalAnalysis::addSymbol(string &p, bool type) {
     int i;
+    /* 查找p是否已经在符号表中
+     1.已定义
+     2.能在符号表中找到
+     3.是字母开头(表示变量)
+     4.只有一个字符(区分标识符和字符串常量)*/
+//    if (type && findcreate(p, type) == 0 && isalpha(p[0]) &&p[1]=='\0' ) {
+//        color1(0x0c);
+//        cout << "ERROR:  The variable '" << p << "' was already defined!" << endl;
+//        color1(0x07);
+//        lexicalFlag = false;
+//    }
     if (isdigit(p[0])) {
         symbolTable[symbolTableSize].sign = p;
         symbolTable[symbolTableSize++].code = 2;
@@ -50,7 +74,9 @@ void LexicalAnalysis::loadProperty(string fileName) {
     int i = 0;
     ifstream fin(fileName);
     if (!fin.is_open()) {
-        cout << "无法找到关键字表" << endl;
+        color1(0x0c);
+        cout << "ERROR: failed to find propertyTable!" << endl;
+        color1(0x07);
         return;
     }
     while (!fin.eof()) {
@@ -72,12 +98,13 @@ void LexicalAnalysis::analyse(string &code) {
             word.clear();
             word += *p;
             p++;
+            // 判断p读头是否为字符串或数字
             while (isalnum(*p) || *p == '_') {
                 word += *p;
                 p++;
             }
             if (word == "int" || word == "float" || word == "char")
-                // 为1代表int float char 类型的字符串变量
+                // 为1代表int float char 类型
                 type = true;
             addSymbol(word, type);
         } else if (*p >= '0' && *p <= '9') {
@@ -116,5 +143,14 @@ void LexicalAnalysis::analyse(string &code) {
             p++;
             addSymbol(word, type);
         }
+    }
+    if (lexicalFlag) {
+        color1(0x02);
+        cout << "LEXICAL ANALYSIS SUCCESS!" << endl;
+        color1(0x07);
+    } else {
+        color1(0x0c);
+        cout << "LEXICAL ANALYSIS FAILED!" << endl;
+        exit(0);
     }
 }

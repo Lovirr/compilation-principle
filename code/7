@@ -1,0 +1,11 @@
+void main() {
+	int a, b, d, x;
+	a = 1;
+	b = 2;
+	d = 3;
+	x = 5;
+    if (x > 6)
+    	x = x - 1;
+    else
+    	x = x + 1;
+}

@@ -1,0 +1,15 @@
+void main() {
+    int a, b, x;
+    x = (2 + 4) * 3 - 6 / 1;
+    a = 2 * x;
+    b = 3 + a;
+    if (a > 3 || b < 5)
+        x = 4;
+    else
+        x = 5;
+    while (x > 1)
+        x = x - 1;
+    do
+        x = x + 1;
+    while (x < 5);
+}

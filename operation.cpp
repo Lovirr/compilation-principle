@@ -1,4 +1,13 @@
 #include "operation.h"
+#include <Windows.h>
+
+void color4(WORD c);//控制输出字体属性(字体颜色)
+void color4(WORD c) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);//设置控制台输出字体颜色值为c的值
+}
+
+
+//求表达式的值，类似于计算器
 
 int OperationAnalysis::getLRIndex(int a) {
     int i;
@@ -33,8 +42,10 @@ bool OperationAnalysis::analyse() {
         j = getLRIndex(sym);
         t = LRTable[l][j];
         if (t == -1) {
-            cout << "错误：四则运算语法错误" << endl;
-            return false;
+            color4(0x0c);
+            cout << "ERROR:  Arithmetic Syntax error!" << endl;
+            color4(0x07);
+            exit(0);
         } else if (t == -2) {
             acc = true;
         } else if (t >= 0 && t < 100) {

@@ -1,4 +1,11 @@
 #include "grammar.h"
+#include <Windows.h>
+
+void color(WORD c);//控制输出字体属性(字体颜色)
+void color(WORD c) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);//设置控制台输出字体颜色值为c的值
+}
+
 
 GrammarAnalysis::GrammarAnalysis() {
     parser = new Parser();
@@ -31,11 +38,21 @@ void GrammarAnalysis::program() {
                 else if (sym1 == 24)
                     //;
                     break;
-                else
-                    cout << "错误的变量定义" << endl;
+                else {
+                    color(0x0c);
+                    cout << "ERROR: Wrong variable definition!" << endl;
+                    grammarFlag = false;
+                    color(0x07);
+                }
 
-            } else
-                cout << "错误的变量定义" << endl;
+            } else {
+                color(0x0c);
+                cout << "ERROR: Wrong variable definition!" << endl;
+                grammarFlag = false;
+                color(0x07);
+            }
+
+
         }
     } else if (sym1 == 1) {
         tempstring = symbolTable[symbolIndex - 1].sign;
@@ -50,10 +67,20 @@ void GrammarAnalysis::program() {
                     parser->gen("=", 1000 + tempIndex - 1, -1, signTable[temp].name);
                 }
             }
-            if (sym1 != 24)
-                cout << "赋值语句缺少;" << endl;
-        } else
-            cout << "赋值语句缺少=" << endl;
+            if (sym1 != 24) {
+                color(0x0c);
+                cout << "ERROR: Missing ';' in assignment statement!" << endl;
+                grammarFlag = false;
+                color(0x07);
+            }
+
+        } else {
+            color(0x0c);
+            cout << "ERROR: Missing '=' in assignment statement!" << endl;
+            grammarFlag = false;
+            color(0x07);
+        }
+
     } else if (sym1 == 30) {
         // if
         sym1 = symbolTable[symbolIndex++].code;
@@ -77,10 +104,19 @@ void GrammarAnalysis::program() {
                     symbolIndex--;
                     Schain = parser->Merg(ffc, Schain);
                 }
-            } else
-                cout << "if语句缺少右括号" << endl;
-        } else
-            cout << "if语句缺少左括号" << endl;
+            } else {
+                color(0x0c);
+                cout << "ERROR: Missing ')' in IF statement!" << endl;
+                grammarFlag = false;
+                color(0x07);
+            }
+
+        } else {
+            color(0x0c);
+            cout << "ERROR: Missing '(' in IF statement!" << endl;
+            grammarFlag = false;
+            color(0x07);
+        }
     } else if (sym1 == 32) {
         // while
         sym1 = symbolTable[symbolIndex++].code;
@@ -96,10 +132,19 @@ void GrammarAnalysis::program() {
                 parser->gen("j", -1, -1, to_string(q));
                 Schain = ffc;
                 E_FC = ffc;
-            } else
-                cout << "while语句缺少右括号" << endl;
-        } else
-            cout << "while语句缺少左括号" << endl;
+            } else {
+                color(0x0c);
+                cout << "ERROR: Missing ')' in WHILE statement!" << endl;
+                grammarFlag = false;
+                color(0x07);
+            }
+
+        } else {
+            color(0x0c);
+            cout << "ERROR: Missing '(' in WHILE statement!" << endl;
+            grammarFlag = false;
+            color(0x07);
+        }
     } else if (sym1 == 33) {
         // do
         q = NXQ;
@@ -114,10 +159,18 @@ void GrammarAnalysis::program() {
                     doFlag = true;
                     parser->Backpatch(E_TC, q);
                     Schain = E_FC;
-                } else
-                    cout << "do-while语句缺少右括号" << endl;
-            } else
-                cout << "do-while语句缺少左括号" << endl;
+                } else {
+                    color(0x0c);
+                    cout << "ERROR: Missing ')' in DO-WHILE statement!" << endl;
+                    grammarFlag = false;
+                    color(0x07);
+                }
+            } else {
+                color(0x0c);
+                cout << "ERROR: Missing '(' in DO-WHILE statement!" << endl;
+                grammarFlag = false;
+                color(0x07);
+            }
         }
     }
 }
@@ -131,5 +184,16 @@ void GrammarAnalysis::analyse() {
             whileFlag = false;
             doFlag = false;
         }
+    }
+    if(grammarFlag){
+        color(0x02);
+        cout << "GRAMMAR ANALYSIS SUCCESS!" << endl;
+        color(0x07);
+    }
+
+    else{
+        color(0x0c);
+        cout << "GRAMMER ANALYSISI FAILED, PLEASE CHECK OUT YOUR CODE!" << endl;
+        exit(0);
     }
 }

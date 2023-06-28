@@ -3,7 +3,6 @@
 void ComBuilder::build() {
     int i, j = 0, n, k;
     set<int> lTable;
-    //把每个四元式要跳转的序号存入数组arr
     for (i = 1; i < quadIndex; i++) {
         if (isdigit(quadTable[i].result[0])) {
             int arrnum = atoi(quadTable[i].result.c_str());
@@ -17,7 +16,6 @@ void ComBuilder::build() {
         i++;
     }
     i = 1;
-    // 从第一个四元式翻译成汇编
     for (i = 1; i < quadIndex; i++) {
         if (lTable.count(i))
             comTable[comIndex].lable = "L" + to_string(lTableIndex[i]);
@@ -216,7 +214,7 @@ void ComBuilder::printCode() {
 }
 
 void ComBuilder::printCom() {
-    cout << "汇编代码如下：" << endl;
+    cout << endl << "Assembly code:" << endl;
     printVariables();
     printStacks();
     printCode();

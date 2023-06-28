@@ -7,6 +7,7 @@
 #include "parser.h"
 using namespace std;
 
+
 //语法分析类
 class GrammarAnalysis {
 private:
@@ -25,6 +26,8 @@ public:
     ~GrammarAnalysis();
     //对代码进行语法分析
     void analyse();
+    //语法分析是否成功
+    bool grammarFlag = true;
 };
 
 #endif

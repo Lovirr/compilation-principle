@@ -1,4 +1,11 @@
 #include "conditional.h"
+#include <Windows.h>
+
+void color2(WORD c);//控制输出字体属性(字体颜色)
+void color2(WORD c)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);//设置控制台输出字体颜色值为c的值
+}
 
 int ConditionalAnalyzer::getLRIndex(int a) {
     int i;
@@ -63,7 +70,9 @@ bool ConditionalAnalyzer::analyse() {
         j = getLRIndex(sym);
         t = LRTable[l][j];
         if (t == -1) {
-            cout << "错误：条件语句语法错误" << endl;
+            color2(0x0c);
+            cout << "ERROR: Conditional statement Syntax error!" << endl;
+            color2(0x07);
             return false;
         } else if (t == -2) {
             acc = true;

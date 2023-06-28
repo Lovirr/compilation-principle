@@ -14,7 +14,7 @@ set(DIR_SRCS compiler.h compiler.cpp
     operation.h operation.cpp
     conditional.h conditional.cpp
     combuilder.h combuilder.cpp
-)
+        )
 
 # 指定生成目标
 add_executable(CompilationPrinciple ${DIR_SRCS})
